@@ -15,11 +15,13 @@ function outer() {
   another variable called 'inner'. */
   
   // Code Here
+  var inner = outer();
   
   //Once you do that, invoke inner.
   
   //Code Here
-  
+  inner();
+
   
   
   
@@ -51,6 +53,8 @@ function outer() {
   */
   
     //Code Here
+    var callJake = callFriend('Jake');
+    callJake(435-555-9248);
   
   
   
@@ -70,6 +74,14 @@ function outer() {
   
   //Code Here
   
+  function makeCounter(){
+    var num = 0;
+    return function(){
+      return num += 1;
+    }
+
+  }
+
   //Uncomment this once you make your function
   //   var count = makeCounter();
   //   count(); // 1
@@ -103,10 +115,15 @@ function outer() {
   function counterFactory(value) {
   
     // Code here.
-  
+  var val = value;
   
     return {
-
+      inc: function(){
+        return val += 1;
+      },
+      dec: function(){
+        return val -= 1;
+      }
     }
   }
   
@@ -140,9 +157,12 @@ function outer() {
   function motivation(firstname, lastname) {
   
     var welcomeText = 'You\'re doing awesome, keep it up ';
-  
+    var first = firstname;
+    var last = lastname;
     // code message function here.
-  
+    return function message(){
+      return welcomeText + first + ' ' + last + '.';
+    }
   
     //Uncommment this to return the value of your message function
     //return message;
@@ -184,9 +204,12 @@ function outer() {
     // outside our lexical scope
     return {
       // Code here.
+      publicMethod: function(){
+        return privateMethod()} 
     };
   
   })();
+  module.publicMethod();
   
   
   
@@ -203,6 +226,12 @@ function outer() {
 
     return {
       // Code here
+      addToSecret: function(add){
+        return secret += add;
+      },
+      takeAwayFromSecret: function(sub){
+        return secret -= sub;
+      }
     }
   }
   
@@ -230,9 +259,13 @@ function outer() {
   
   function timeOutCounter() {
     for (var i = 0; i <= 5; i++) {
-      setTimeout(function() {
-          console.log(i)
-      }, i * 1000)
+      setTimeout(
+        (function(val) {
+         return function(){
+            console.log(val);
+         }
+        })(i)
+      , i * 1000)
     }
   }
   timeOutCounter();
